@@ -2,7 +2,24 @@
 
 ## Introduction
 
-(TODO)
+The data set we are working with is professional League of Legends match data for 2022. The main question we explore throughout this EDA is what makes a team win a match. We mainly look at two aspects: the team's side (blue or red) and the champions they have selected and banned. One of the original motivations for this is due to the widely known rumor that the blue side wins more than the red, and teams tend to choose to be on the blue side when they have priority. We want to verify whether the rumor is true and back it up with data. On the other hand, we are also curious how much of an impact the champions being selected or banned have on the outcome of the match.
+
+Our data set is accessed from the website Oracle’s Elixir: https://oracleselixir.com/tools/downloads. The original data consists of 148992 rows. Every 12 rows is data for a single match; 10 of them are player data, and 2 are team data. In our project, we have decided to focus on Tier 1 and split the data into two sets: player data and team data.
+
+The main columns we work with are `gameid`, `url`, `league`, `split`, `playoffs`, `patch`, `side`, `ban1`, `ban2`, `ban3`, `ban4`, `ban5`, `pick1`, `pick2`, `pick3`, `pick4`, `pick5`, `gamelength`, `result`. Among all, `side`, `ban1`, `ban2`, `ban3`, `ban4`, `ban5`, `pick1`, `pick2`, `pick3`, `pick4`, `pick5`, `result` were mainly used for exploring the factors for the team to win. Most others were used for early exploratory data analysis and data cleaning to understand more about the data set.
+
+The description to the relevant columns are as follows:
+- `gameid`: unique player identification number
+- `url`: url to game data else NaN
+- `league`: team name
+- `split`: 
+- `playoffs`: 
+- `patch`: version of game
+- `side`: the teams side, either red or blue
+- `ban1`, `ban2`, `ban3`, `ban4`, `ban5`: the 5 champions banned by the opposing team, meaning the champions that cannot be used
+- `pick1`, `pick2`, `pick3`, `pick4`, `pick5`: the 5 champions being picked by the team
+- `gamelength`: time the game took in seconds
+- `result`: 1 if the team won or otherwise
 
 ## Data Cleaning and Exploratory Data Analysis
 
