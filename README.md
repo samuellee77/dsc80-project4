@@ -28,6 +28,7 @@ The description to the relevant columns are as follows:
 For the data cleaning, we first separate the orignal dataset into two: `tier1_player` and `tier1_team`, that is separate the first 10 rows (10 players per match) and 2 rows (2 teams per match) for every 12 rows, because we found that the rows in the original dataset belong to two categories of players and teams. If we don't separate them, there will be many missing by design values. 
 
 `tier1_player`:
+
 |         gameid | datacompleteness |                                             url | league | year |  split |  playoffs |                 date |  game |  patch |  ... |    ban3 |    ban4 |    ban5 | pick1 | pick2 | pick3 | pick4 | pick5 | gamelength | result |
 |----------------|------------------|------------------------------------------------|--------|------|--------|-----------|----------------------|-------|--------|------|--------|--------|--------|--------|--------|------------|--------|
 | 8401-8401_game_1 |          partial | https://lpl.qq.com/es/stats.shtml?bmid=8401 |    LPL | 2022 | Spring |         0 | 2022-01-10 09:24:26  |     1 |  12.01 |  ... | Caitlyn |   Jayce | Camille |   NaN |   NaN |   NaN |   NaN |   NaN |       1365 |      1 |
@@ -36,8 +37,8 @@ For the data cleaning, we first separate the orignal dataset into two: `tier1_pl
 | 8401-8401_game_1 |          partial | https://lpl.qq.com/es/stats.shtml?bmid=8401 |    LPL | 2022 | Spring |         0 | 2022-01-10 09:24:26  |     1 |  12.01 |  ... | Caitlyn |   Jayce | Camille |   NaN |   NaN |   NaN |   NaN |   NaN |       1365 |      1 |
 | 8401-8401_game_1 |          partial | https://lpl.qq.com/es/stats.shtml?bmid=8401 |    LPL | 2022 | Spring |         0 | 2022-01-10 09:24:26  |     1 |  12.01 |  ... | Caitlyn |   Jayce | Camille |   NaN |   NaN |   NaN |   NaN |   NaN |       1365 |      1 |
 
-
 `tier1_team`:
+
 |          gameid | datacompleteness |                                              url | league | year |  split |  playoffs |                 date |  game |  patch |  ... |   ban3 |   ban4 |   ban5 |  pick1 |      pick2 |     pick3 |     pick4 | pick5 | gamelength | result |
 |-----------------|------------------|-------------------------------------------------|--------|------|--------|-----------|----------------------|-------|--------|------|--------|--------|--------|--------|--------|------------|--------|
 | 8401-8401_game_1 |          partial | https://lpl.qq.com/es/stats.shtml?bmid=8401     |    LPL | 2022 | Spring |         0 | 2022-01-10 09:24:26  |     1 |  12.01 |  ... | Caitlyn |  Jayce | Camille |   Jinx | Jarvan IV |  Nautilus |  Syndra |  Gwen |       1365 |      1 |
