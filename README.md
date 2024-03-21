@@ -27,10 +27,12 @@ The description to the relevant columns are as follows:
 
 For the data cleaning, we first separate the orignal dataset into two: `tier1_player` and `tier1_team`, that is separate the first 10 rows (10 players per match) and 2 rows (2 teams per match) for every 12 rows, because we found that the rows in the original dataset belong to two categories of players and teams. If we don't separate them, there will be many missing by design values. 
 
+```python
 print(tier1_team.head()).to_markdown(index=False))
-
+```
+```python
 print(tier1_player.hea()).to_markdown(index=False))
-
+```
 ### Univariate Analysis
 
 #### Number of Games Played in Each Patch
@@ -46,7 +48,7 @@ We can see that there were no games played in tier 1 leagues in 12.07, and there
 
 #### Distribution of Game Length
 
-For the following plot, we can see that the distribution of game length is skewed to the right, with the **median** of **31.39 minutes**.
+For the following plot, we can see that the distribution of game length is skewed to the right, with the **median** of **31.39 minutes**. We converted from seconds to minutes here for easier interpretation.
 
 <iframe
   src="assets/fig2.html"
@@ -122,7 +124,8 @@ We first create a pivot table to count the times of champions picked in the role
 | Akshan     |    21 |        0 |     2 |     0 |         0 |
 | Alistar    |     0 |        0 |     0 |     0 |       270 |
 
-From the plots below, we can see the most played 10 picked champions in each position.
+From the plots below, we can see the most played 10 picked champions in each position. A long list of picked champions have minimal meaning, but this pivot table condenses information and can provide information about the popular champions for every position, and potentially the better performing ones. 
+
 <iframe
   src="assets/fig7-1.html"
   width="800"
@@ -156,7 +159,16 @@ From the plots below, we can see the most played 10 picked champions in each pos
 
 ## Assessment of Missingness
 ### NMAR Analysis
-NMAR occurs when the probability of data being missing depends on unobserved information. As we focus on data for tier 1, we realize that `url` column in the dataset is missing for some rows. We see how the LPL is not missing any urls, while others teams completely do not have any urls or have some. If LPL consistently provides this URL while other teams vary, it suggests that the missingness is related to the specific teams themselves. This is NMAR because the presence or absence of a URL linking to match information depends on the team; however, it cannot be recovered by other columns.
+NMAR occurs when the probability of data being missing depends on unobserved information. 
+As we focus on data for tier 1, we realize that `url` column in the dataset is missing for some rows.
+```python
+print(tier1_team.loc[tier1_team['url'].notnull()]['league'].value_counts()).to_markdown(index=False))
+```
+```python
+print(tier1_team['league'].value_counts()).to_markdown(index=False))
+```
+From above, we see how the LPL is not missing any urls, while others teams completely do not have any urls or have some.
+If LPL consistently provides this URL while other teams vary, it suggests that the missingness is related to the specific teams themselves. This is NMAR because the presence or absence of a URL linking to match information depends on the team; however, it cannot be recovered by other columns.
 
 This indicate differences in how teams handle data reporting regarding match information. It could also reflect differences in resources, priorities, or organizational policies among the teams.
 
