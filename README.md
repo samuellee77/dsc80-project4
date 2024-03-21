@@ -29,7 +29,7 @@ For the data cleaning, we first separate the orignal dataset into two: `tier1_pl
 
 
 `tier1_player`:
-
+```markdown
 |         gameid | datacompleteness |                                             url | league | year |  split |  playoffs |                 date |  game |  patch |  ... |    ban3 |    ban4 |    ban5 | pick1 | pick2 | pick3 | pick4 | pick5 | gamelength | result |
 |----------------|------------------|------------------------------------------------|--------|------|--------|-----------|----------------------|-------|--------|------|--------|--------|--------|--------|--------|------------|--------|
 | 8401-8401_game_1 |          partial | https://lpl.qq.com/es/stats.shtml?bmid=8401 |    LPL | 2022 | Spring |         0 | 2022-01-10 09:24:26  |     1 |  12.01 |  ... | Caitlyn |   Jayce | Camille |   NaN |   NaN |   NaN |   NaN |   NaN |       1365 |      1 |
@@ -37,10 +37,10 @@ For the data cleaning, we first separate the orignal dataset into two: `tier1_pl
 | 8401-8401_game_1 |          partial | https://lpl.qq.com/es/stats.shtml?bmid=8401 |    LPL | 2022 | Spring |         0 | 2022-01-10 09:24:26  |     1 |  12.01 |  ... | Caitlyn |   Jayce | Camille |   NaN |   NaN |   NaN |   NaN |   NaN |       1365 |      1 |
 | 8401-8401_game_1 |          partial | https://lpl.qq.com/es/stats.shtml?bmid=8401 |    LPL | 2022 | Spring |         0 | 2022-01-10 09:24:26  |     1 |  12.01 |  ... | Caitlyn |   Jayce | Camille |   NaN |   NaN |   NaN |   NaN |   NaN |       1365 |      1 |
 | 8401-8401_game_1 |          partial | https://lpl.qq.com/es/stats.shtml?bmid=8401 |    LPL | 2022 | Spring |         0 | 2022-01-10 09:24:26  |     1 |  12.01 |  ... | Caitlyn |   Jayce | Camille |   NaN |   NaN |   NaN |   NaN |   NaN |       1365 |      1 |
-
+```
 
 `tier1_team`:
-
+```markdown
 |          gameid | datacompleteness |                                              url | league | year |  split |  playoffs |                 date |  game |  patch |  ... |   ban3 |   ban4 |   ban5 |  pick1 |      pick2 |     pick3 |     pick4 | pick5 | gamelength | result |
 |-----------------|------------------|-------------------------------------------------|--------|------|--------|-----------|----------------------|-------|--------|------|--------|--------|--------|--------|--------|------------|--------|
 | 8401-8401_game_1 |          partial | https://lpl.qq.com/es/stats.shtml?bmid=8401     |    LPL | 2022 | Spring |         0 | 2022-01-10 09:24:26  |     1 |  12.01 |  ... | Caitlyn |  Jayce | Camille |   Jinx | Jarvan IV |  Nautilus |  Syndra |  Gwen |       1365 |      1 |
@@ -48,7 +48,7 @@ For the data cleaning, we first separate the orignal dataset into two: `tier1_pl
 | 8401-8401_game_2 |          partial | https://lpl.qq.com/es/stats.shtml?bmid=8401     |    LPL | 2022 | Spring |         0 | 2022-01-10 10:09:22  |     2 |  12.01 |  ... | Thresh |  Jayce | Camille |   Jinx |  Xin Zhao |     Rakan |   Rumble |  Corki |       1444 |      1 |
 | 8401-8401_game_2 |          partial | https://lpl.qq.com/es/stats.shtml?bmid=8401     |    LPL | 2022 | Spring |         0 | 2022-01-10 10:09:22  |     2 |  12.01 |  ... | Jarvan IV | LeBlanc |   Akali | Lee Sin |     Leona |     Ziggs | Gangplank | Twisted Fate |       1444 |      0 |
 | 8402-8402_game_1 |          partial | https://lpl.qq.com/es/stats.shtml?bmid=8402     |    LPL | 2022 | Spring |         0 | 2022-01-10 11:26:11  |     1 |  12.01 |  ... | Aphelios | Nautilus |   Leona |   Jinx |     Viego |    Thresh |    Corki | Graves |       1893 |      1 |
-
+```
 
 ### Univariate Analysis
 
