@@ -39,7 +39,6 @@ For the data cleaning, we first separate the orignal dataset into two: `tier1_pl
 
 
 `tier1_team`:
-```markdown
 |          gameid | datacompleteness |                                              url | league | year |  split |  playoffs |                 date |  game |  patch |  ... |   ban3 |   ban4 |   ban5 |  pick1 |      pick2 |     pick3 |     pick4 | pick5 | gamelength | result |
 |-----------------|------------------|-------------------------------------------------|--------|------|--------|-----------|----------------------|-------|--------|------|--------|--------|--------|--------|--------|------------|--------|
 | 8401-8401_game_1 |          partial | https://lpl.qq.com/es/stats.shtml?bmid=8401     |    LPL | 2022 | Spring |         0 | 2022-01-10 09:24:26  |     1 |  12.01 |  ... | Caitlyn |  Jayce | Camille |   Jinx | Jarvan IV |  Nautilus |  Syndra |  Gwen |       1365 |      1 |
@@ -47,7 +46,7 @@ For the data cleaning, we first separate the orignal dataset into two: `tier1_pl
 | 8401-8401_game_2 |          partial | https://lpl.qq.com/es/stats.shtml?bmid=8401     |    LPL | 2022 | Spring |         0 | 2022-01-10 10:09:22  |     2 |  12.01 |  ... | Thresh |  Jayce | Camille |   Jinx |  Xin Zhao |     Rakan |   Rumble |  Corki |       1444 |      1 |
 | 8401-8401_game_2 |          partial | https://lpl.qq.com/es/stats.shtml?bmid=8401     |    LPL | 2022 | Spring |         0 | 2022-01-10 10:09:22  |     2 |  12.01 |  ... | Jarvan IV | LeBlanc |   Akali | Lee Sin |     Leona |     Ziggs | Gangplank | Twisted Fate |       1444 |      0 |
 | 8402-8402_game_1 |          partial | https://lpl.qq.com/es/stats.shtml?bmid=8402     |    LPL | 2022 | Spring |         0 | 2022-01-10 11:26:11  |     1 |  12.01 |  ... | Aphelios | Nautilus |   Leona |   Jinx |     Viego |    Thresh |    Corki | Graves |       1893 |      1 |
-```
+
 
 ### Univariate Analysis
 
@@ -177,12 +176,29 @@ From the plots below, we can see the most played 10 picked champions in each pos
 ### NMAR Analysis
 NMAR occurs when the probability of data being missing depends on unobserved information. 
 As we focus on data for tier 1, we realize that `url` column in the dataset is missing for some rows.
-```python
-print(tier1_team.loc[tier1_team['url'].notnull()]['league'].value_counts()).to_markdown(index=False))
-```
-```python
-print(tier1_team['league'].value_counts()).to_markdown(index=False))
-```
+
+| league | Count |
+|--------|-------|
+| LPL    | 1572  |
+| LEC    | 84    |
+| LCS    | 4     |
+| LCO    | 4     |
+| LCK    | 2     |
+| PCS    | 2     |
+
+| league | Count |
+|--------|-------|
+| LPL    | 1572  |
+| LCK    | 934   |
+| VCS    | 646   |
+| LCS    | 612   |
+| PCS    | 542   |
+| LEC    | 486   |
+| CBLOL  | 486   |
+| LJL    | 428   |
+| LCO    | 424   |
+| LLA    | 374   |
+
 From above, we see how the LPL is not missing any urls, while others teams completely do not have any urls or have some.
 If LPL consistently provides this URL while other teams vary, it suggests that the missingness is related to the specific teams themselves. This is NMAR because the presence or absence of a URL linking to match information depends on the team; however, it cannot be recovered by other columns.
 
