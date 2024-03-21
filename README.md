@@ -1,4 +1,4 @@
-**Names**: Samuel Lee, Nian-Nian Wang
+#### **Names**: Samuel Lee, Nian-Nian Wang
 
 ## Introduction
 
@@ -11,15 +11,15 @@ The main columns we work with are `gameid`, `url`, `league`, `split`, `playoffs`
 The description to the relevant columns are as follows:
 - `gameid`: unique game identification number
 - `url`: url to game data else NaN
-- `league`: team name
-- `split`: 
-- `playoffs`: 
+- `league`: the region/league
+- `split`: the split/season the game was in
+- `playoffs`: 0 if the game was in regular season; 1 if the game was in playoffs
 - `patch`: version of game
-- `side`: the teams side, either red or blue
+- `side`: the team's side, either red or blue
 - `ban1`, `ban2`, `ban3`, `ban4`, `ban5`: the 5 champions banned by the opposing team, meaning the champions that cannot be used
 - `pick1`, `pick2`, `pick3`, `pick4`, `pick5`: the 5 champions being picked by the team
 - `gamelength`: time the game took in seconds
-- `result`: 1 if the team won or otherwise
+- `result`: 1 if the team won; 0 if the team lost
 
 ## Data Cleaning and Exploratory Data Analysis
 
@@ -29,6 +29,7 @@ For the data cleaning, we first separate the orignal dataset into two: `tier1_pl
 
 
 A snippet of `tier1_player`:
+
 | gameid          | datacompleteness | url                                           | league | year | split  | playoffs | date                | game | patch | ... | ban3    | ban4   | ban5   | pick1 | pick2 | pick3  | pick4 | pick5 | gamelength | result |
 |-----------------|------------------|-----------------------------------------------|--------|------|--------|----------|---------------------|------|-------|-----|---------|--------|--------|-------|-------|--------|-------|-------|------------|--------|
 | 8401-8401_game_1| partial          | https://lpl.qq.com/es/stats.shtml?bmid=8401  | LPL    | 2022 | Spring | 0        | 2022-01-10 09:24:26 | 1    | 12.01 | ... | Caitlyn | Jayce  | Camille| NaN   | NaN   | NaN    | NaN   | NaN   | 1365       | 1      |
@@ -37,8 +38,8 @@ A snippet of `tier1_player`:
 | 8401-8401_game_1| partial          | https://lpl.qq.com/es/stats.shtml?bmid=8401  | LPL    | 2022 | Spring | 0        | 2022-01-10 09:24:26 | 1    | 12.01 | ... | Caitlyn | Jayce  | Camille| NaN   | NaN   | NaN    | NaN   | NaN   | 1365       | 1      |
 | 8401-8401_game_1| partial          | https://lpl.qq.com/es/stats.shtml?bmid=8401  | LPL    | 2022 | Spring | 0        | 2022-01-10 09:24:26 | 1    | 12.01 | ... | Caitlyn | Jayce  | Camille| NaN   | NaN   | NaN    | NaN   | NaN   | 1365       | 1      |
 
-
 A snippet of `tier1_team`:
+
 | gameid          | datacompleteness | url                                         | league | year | split  | playoffs | date                | game | patch | ... | ban3       | ban4      | ban5    | pick1      | pick2     | pick3    | pick4       | pick5 |
 |-----------------|------------------|---------------------------------------------|--------|------|--------|----------|---------------------|------|-------|-----|------------|-----------|---------|------------|-----------|----------|-------------|-------|
 | 8401-8401_game_1 | partial          | https://lpl.qq.com/es/stats.shtml?bmid=8401 | LPL    | 2022 | Spring | 0        | 2022-01-10 09:24:26 | 1    | 12.01 | ... | Caitlyn    | Jayce     | Camille | Jinx       | Jarvan IV | Nautilus | Syndra      | Gwen  |
@@ -46,7 +47,6 @@ A snippet of `tier1_team`:
 | 8401-8401_game_2 | partial          | https://lpl.qq.com/es/stats.shtml?bmid=8401 | LPL    | 2022 | Spring | 0        | 2022-01-10 10:09:22 | 2    | 12.01 | ... | Thresh     | Jayce     | Camille | Jinx       | Xin Zhao  | Rakan    | Rumble      | Corki |
 | 8401-8401_game_2 | partial          | https://lpl.qq.com/es/stats.shtml?bmid=8401 | LPL    | 2022 | Spring | 0        | 2022-01-10 10:09:22 | 2    | 12.01 | ... | Jarvan IV  | LeBlanc   | Akali   | Lee Sin    | Leona     | Ziggs    | Gangplank  | Twisted Fate |
 | 8402-8402_game_1 | partial          | https://lpl.qq.com/es/stats.shtml?bmid=8402 | LPL    | 2022 | Spring | 0        | 2022-01-10 11:26:11 | 1    | 12.01 | ... | Aphelios   | Nautilus | Leona   | Jinx       | Viego     | Thresh   | Corki      | Graves|
-
 
 ### Univariate Analysis
 
@@ -291,24 +291,32 @@ Our prediction problem is that we want to predict the result of the game at the 
 
 ## Baseline Model
 
-In the baseline model, we use `pick1` to `pick5` columns as features. They are all nominal variable, having the names of the champions, which is string, so we have 5 nominal features in our baseline model. We use customized one hot encoder to solve the problems that some champions may not appear in the train data but can appear in the test data. We used the `DecisionTreeClassifier` with the max depth of 5 to predict. 
+In the baseline model, we use `pick1` to `pick5` columns as features. They are all nominal variable, having the names of the champions, which is string, so we have 5 nominal features in our baseline model. We use customized one hot encoder to solve the problems that some champions may not appear in the train data but can appear in the test data. We use the `DecisionTreeClassifier()` with the max depth of 5 to predict. 
 
-Our train score is 0.5244, and our test score is 0.4756, which are very low, even lower than random chance (p = 0.50). Therefore, we need to include new features and change our feature engineering process.
+Our train score is 0.5244, and our test score is 0.4771, which are very low, even lower than random chance (p = 0.50). Therefore, we need to include new features and change our feature engineering process.
 
 ## Final Model
 
-For this part, we are going to include the `side` column as a new feature to predict the result of the game because we think that side selection can affect the result. As we demostrated earlier, the win rate of blue side is higher than the win rate of red side.
+For this part, we are going to include the `side` column as a new feature to predict the result of the game because we think that side selection can affect the result. As we demonstrated earlier, the win rate of blue side is higher than the win rate of red side.
 
-For feature engineering part, we would like to add the feature of pick rate of each champion because this can provide more information about the strength of individual champions. Therefore, we build another customized one hot transformer that one hot encode the champions and also include the pick rate of them.
+For feature engineering part, we would like to add the feature of pick rate of each champion because this can provide more information about the strength of individual champions. Therefore, we build another customized one hot transformer that one hot encode the champions and also include the pick rates of them. Like the baseline model, we also use `DecisionTreeClassifier()`.
 
-The train and test scores of our new model now become 0.5564 and 0.5151. We can see that the accuracy improves a little bit. We are going to find the best hyperparameters for our model. After running through different hyperparameters, the best hyperparameters are the max_depth of 4 and the min_samples_split of 2, which has the test score of 0.5538.
+The train and test scores of our new model now become 0.5564 and 0.5159. We can see that the score improves a little bit. We are going to find the best hyperparameters for our model. After running through different hyperparameters, the best hyperparameters are the max_depth of 4 and the min_samples_split of 8, which has the test score of 0.5545.
 
-The final model has a 0.05 higher accuracy than our baseline mode. Although it is not very high, we believe that those are reasonable because players and teams are more important than the champions they pick and the side they choose.
+The final model has about 0.04 higher score than our baseline mode. Although it is not very high, we believe that those are reasonable because players and teams are more important than the champions they pick and the side they choose.
 
 ## Fairness Analysis
 
 For conducting fairness analysis, we want to compare whether the model works equally for both blue and red side. As our hypothesis testing concluded that we cannot be sure if their side has an effect on winning, we want to further compare the performances between these two groups.
 
-![img2](assets/img2.png)
+![img2](assets/confusion.png)
 
-With consideration that teams may consider selecting champions as one important factor to winning a match, cost of false positive of high. It is worse than false negative, where we predict them to lose while they actually won the match during the game. The grid above also shows out of 183 times, 76 teams actually lost when our model predicted them to win. Therefore, we decide to evalue our model's performance on **precision**, which is 0.5849.
+With consideration that teams may consider selecting champions as one important factor to winning a match, cost of false positive of high. It is worse than false negative, where we predict them to lose while they actually won the match during the game. The grid above also shows out of 183 times, 76 teams actually lost when our model predicted them to win. Therefore, we decide to evalue our model's performance on **precision**, which is 0.5815.
+
+We run a hypothesis test to check if the difference of our model performance between blue and red sides is statistically significant.
+- **Null Hypothesis:** The precision of the model for teams on the blue side and red side are roughly the same, and any differences are due to random chance.
+- **Alternative Hypothesis:** The precision of the model for teams on the blue side is greather than its precision for teams on the red side.
+- Cutoff: 0.05
+- We will perform permutation testing to test our hypothesis
+
+After performing the permutation test, our p-values is 0.034, which is smaller than our cutoff. Therefore, we reject our null hypothesis, meaning that blue side having a higher precision than the red side.
