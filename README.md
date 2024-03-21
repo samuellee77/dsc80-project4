@@ -25,7 +25,11 @@ The description to the relevant columns are as follows:
 
 ### Data Cleaning
 
-For the data cleaning, we first separate the orignal dataset into two: `tier1_player` and `tier1_team` because we found that the rows in the original dataset belong to two categories of players and teams. If we don't separate them, there will be many missing by design values. 
+For the data cleaning, we first separate the orignal dataset into two: `tier1_player` and `tier1_team`, that is separate the first 10 rows (10 players per match) and 2 rows (2 teams per match) for every 12 rows, because we found that the rows in the original dataset belong to two categories of players and teams. If we don't separate them, there will be many missing by design values. 
+
+print(tier1_team.head()).to_markdown(index=False))
+
+print(tier1_player.hea()).to_markdown(index=False))
 
 ### Univariate Analysis
 
