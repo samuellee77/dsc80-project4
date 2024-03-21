@@ -56,6 +56,7 @@ From the following boxplot and barplot, we can see that there is no significant 
 #### Blue / Red Team Win Rate in Each Tier 1 League
 
 From the table and grouped barplot below, we can see that in most leagues (except LCS, LLA, and VCS), **the win rate of blue side is higher than the win rate of red side.** Especially in PCS, the difference of the win rates between blue and red sides is about 0.20, which is a significant amount that can affect the result of the game.
+
 | league   |     Blue |      Red |
 |:---------|---------:|---------:|
 | CBLOL    | 0.539095 | 0.460905 |
@@ -68,6 +69,7 @@ From the table and grouped barplot below, we can see that in most leagues (excep
 | LPL      | 0.549618 | 0.450382 |
 | PCS      | 0.605166 | 0.394834 |
 | VCS      | 0.495356 | 0.504644 |
+
 <iframe
   src="assets/fig5.html"
   width="800"
@@ -90,6 +92,7 @@ From the plot below, we can see that LPL has the most games played in 2022. This
 
 #### Most Picked Champions in Each Position
 We first create a pivot table to count the times of champions picked in the roles.
+
 | champion   |   Top |   Jungle |   Mid |   Bot |   Support |
 |:-----------|------:|---------:|------:|------:|----------:|
 | Aatrox     |   224 |        0 |     1 |     0 |         0 |
@@ -97,6 +100,7 @@ We first create a pivot table to count the times of champions picked in the role
 | Akali      |   144 |        0 |   203 |     0 |         0 |
 | Akshan     |    21 |        0 |     2 |     0 |         0 |
 | Alistar    |     0 |        0 |     0 |     0 |       270 |
+
 From the plots below, we can see the most played 10 picked champions in each position.
 <iframe
   src="assets/fig7-1.html"
@@ -218,8 +222,28 @@ The observed test statistic is 0.0553. The p-value is 0.0. Since the p-value is 
 
 ## Framing a Prediction Problem
 
+Our prediction problem is that we want to predict the result of the game at the end of ban/pick. Therefore, it is a binary classification problem. We use the DecisionTreeClassifer to predict 0 and 1 for the `result` column. We use accuracy os our metric because we think that it gives us the most basic idea on our model's performance.
+
 ## Baseline Model
+
+In the baseline model, we use `pick1` to `pick5` columns as features. They are all nominal variable, having the names of the champions, which is string, so we have 5 nominal features in our baseline model. We use customized one hot encoder to solve the problems that some champions may not appear in the train data but can appear in the test data. We used the `DecisionTreeClassifier` with the max depth of 5 to predict. 
+
+Our train score is 0.5244, and our test score is 0.4756, which are very low, even lower than random chance (p = 0.50). Therefore, we need to include new features and change our feature engineering process.
 
 ## Final Model
 
+For this part, we are going to include the `side` column as a new feature to predict the result of the game because we think that side selection can affect the result. As we demostrated earlier, the win rate of blue side is higher than the win rate of red side.
+
+For feature engineering part, we would like to add the feature of pick rate of each champion because this can provide more information about the strength of individual champions. Therefore, we build another customized one hot transformer that one hot encode the champions and also include the pick rate of them.
+
+The train and test scores of our new model now become 0.5564 and 0.5151. We can see that the accuracy improves a little bit. We are going to find the best hyperparameters for our model. After running through different hyperparameters, the best hyperparameters are the max_depth of 4 and the min_samples_split of 2, which has the test score of 0.5538.
+
+The final model has a 0.05 higher accuracy than our baseline mode. Although it is not very high, we believe that those are reasonable because players and teams are more important than the champions they pick and the side they choose.
+
 ## Fairness Analysis
+
+For conducting fairness analysis, we want to compare whether the model works equally for both blue and red side. As our hypothesis testing concluded that we cannot be sure if their side has an effect on winning, we want to further compare the performances between these two groups.
+
+![img2](path/to/img2.png)
+
+With consideration that teams may consider selecting champions as one important factor to winning a match, cost of false positive of high. It is worse than false negative, where we predict them to lose while they actually won the match during the game. The grid above also shows out of 183 times, 76 teams actually lost when our model predicted them to win. Therefore, we decide to evalue our model's performance on **precision**, which is 0.5849.
