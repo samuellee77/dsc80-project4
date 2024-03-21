@@ -199,8 +199,7 @@ As we focus on data for tier 1, we realize that `url` column in the dataset is m
 | LCO    | 424   |
 | LLA    | 374   |
 
-From above, we see how the LPL is not missing any urls, while others teams completely do not have any urls or have some.
-If LPL consistently provides this URL while other teams vary, it suggests that the missingness is related to the specific teams themselves. This is NMAR because the presence or absence of a URL linking to match information depends on the team; however, it cannot be recovered by other columns.
+From above, we see how the LPL is not missing any urls, while others teams completely do not have any urls or have some. If LPL consistently provides this URL while other teams vary, it suggests that the missingness is related to the specific teams themselves. This is NMAR because the presence or absence of a URL linking to match information depends on the team; however, it cannot be recovered by other columns.
 
 This indicate differences in how teams handle data reporting regarding match information. It could also reflect differences in resources, priorities, or organizational policies among the teams.
 
