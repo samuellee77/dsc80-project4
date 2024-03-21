@@ -244,6 +244,6 @@ The final model has a 0.05 higher accuracy than our baseline mode. Although it i
 
 For conducting fairness analysis, we want to compare whether the model works equally for both blue and red side. As our hypothesis testing concluded that we cannot be sure if their side has an effect on winning, we want to further compare the performances between these two groups.
 
-![img2](path/to/img2.png)
+![img2](assets/img2.png)
 
 With consideration that teams may consider selecting champions as one important factor to winning a match, cost of false positive of high. It is worse than false negative, where we predict them to lose while they actually won the match during the game. The grid above also shows out of 183 times, 76 teams actually lost when our model predicted them to win. Therefore, we decide to evalue our model's performance on **precision**, which is 0.5849.
