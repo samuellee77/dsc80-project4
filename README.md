@@ -1,4 +1,4 @@
-**Names**: Samuel Lee, Nian-Cin Wang
+**Names**: Samuel Lee, Nian-Nian Wang
 
 ## Introduction
 
